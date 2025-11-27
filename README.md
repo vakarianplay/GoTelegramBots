@@ -39,6 +39,22 @@ Collection of telegram bots for various situations
 * One-file build for Windows and Linux (in process)
 
 
+
+
+------------------------
+-------------------------
+
+# 📦[Offer bot](https://github.com/vakarianplay/GoTelegramBots/tree/main/offer_bot)
+
+![alt text](https://img.shields.io/badge/Status-in%20process-orange?style=for-the-badge&logo=Buddy)
+
+* Offer content for telegram channels 
+* Save contents on local drive
+* Posting content (in process)
+* Send content for admins DM for moderation (in process)
+* One-file build for Windows and Linux (in process)
+
+
 ## 🛠️ Releases: 
 
 > For windows x64 and linux x64 in process
