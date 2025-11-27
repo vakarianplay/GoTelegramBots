@@ -3,25 +3,29 @@ package main
 import (
 	"fmt"
 	"log"
+	"strconv"
+	"strings"
 
 	tb "gopkg.in/tucnak/telebot.v2"
 )
 
 // -1003212636286
 var captMsg string
-
+var channelId string
 var adminIDs []int
 
-func PostingSetup(captMsg_ string) {
+func PostingSetup(captMsg_, channelId_, adminIDs_ string) {
 	captMsg = captMsg_
-	adminIDs = append(adminIDs, 7149937853)
+	channelId = channelId_
+
+	adminIDs, _ = stringToInt(adminIDs_)
+	log.Println(adminIDs_, channelId)
 }
 
 func PostingContent(bot *tb.Bot, filePath string, fileType string, userID int) error {
-
-	channelChatID := tb.ChatID(-1003212636286)
-	log.Println("get + " + captMsg)
-	caption := fmt.Sprintf("Контент от пользователя: %d \n"+captMsg, userID)
+	ch, _ := strconv.ParseInt(channelId, 10, 64)
+	channelChatID := tb.ChatID(ch)
+	caption := fmt.Sprintf(captMsg, userID)
 
 	isAdmin := false
 	for _, adminID := range adminIDs {
@@ -32,7 +36,7 @@ func PostingContent(bot *tb.Bot, filePath string, fileType string, userID int) e
 	}
 
 	if isAdmin {
-		log.Printf("Content from admin. Posting... ", userID)
+		log.Println("Content from admin. Posting... ", userID)
 		return publishContent(bot, channelChatID, filePath, fileType, caption)
 	} else {
 		log.Printf("%d User's contents sent to admins", userID)
@@ -76,4 +80,23 @@ func moderateContent(bot *tb.Bot, filePath string, fileType string, userID int) 
 	log.Printf("[MODERATION] File: %s, Type: %s, UserID: %d", filePath, fileType, userID)
 
 	return nil
+}
+
+func stringToInt(input string) ([]int, error) {
+
+	numberStrings := strings.Split(input, ",")
+	numbers := make([]int, 0, len(numberStrings))
+
+	for _, str := range numberStrings {
+		trimmedStr := strings.TrimSpace(str)
+		if trimmedStr == "" {
+			continue
+		}
+		num, err := strconv.Atoi(trimmedStr)
+		if err != nil {
+			return nil, fmt.Errorf("ошибка преобразования '%s': %w", trimmedStr, err)
+		}
+		numbers = append(numbers, num)
+	}
+	return numbers, nil
 }
