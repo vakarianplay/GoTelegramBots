@@ -95,6 +95,12 @@ func handlePhoto(bot *tb.Bot, m *tb.Message) {
 	bot.Send(user, sendMessage, markdown)
 	bot.Delete(msg)
 	log.Println("Изображение успешно сохранено:", fileName)
+
+	err = PostingContent(bot, fileName, "photo", int(user.ID))
+	if err != nil {
+		bot.Send(user, "Ошибка при публикации в канале.")
+		return
+	}
 }
 
 func handleGif(bot *tb.Bot, m *tb.Message) {
@@ -128,6 +134,12 @@ func handleGif(bot *tb.Bot, m *tb.Message) {
 	bot.Send(user, sendMessage, markdown)
 	bot.Delete(msg)
 	log.Println("GIF успешно сохранен:", fileName)
+
+	err = PostingContent(bot, fileName, "gif", int(user.ID))
+	if err != nil {
+		bot.Send(user, "Ошибка при публикации в канале.")
+		return
+	}
 }
 
 func handleVideo(bot *tb.Bot, m *tb.Message) {
@@ -161,6 +173,12 @@ func handleVideo(bot *tb.Bot, m *tb.Message) {
 	bot.Send(user, sendMessage, markdown)
 	bot.Delete(msg)
 	log.Println("Видео успешно сохранено:", fileName)
+
+	err = PostingContent(bot, fileName, "video", int(user.ID))
+	if err != nil {
+		bot.Send(user, "Ошибка при публикации в канале.")
+		return
+	}
 }
 
 func TelegramBot(botApi, content_, users_, startM_, sendM_ string) {
@@ -194,6 +212,8 @@ func TelegramBot(botApi, content_, users_, startM_, sendM_ string) {
 		// bot.Send(m.Sender, "*Привет, "+userName+"*\n\n_Этот бот - предложка._\nПросто скинь сюда мем, который ты хочешь запостить.", markdown)
 		bot.Send(m.Sender, userName+"\n"+startM_, markdown)
 		bot.Send(m.Sender, "🌐Бесплатный и быстрый VPN: *https://raspad.space/vpn https://t.me/raspad_vpn*", markdown)
+		// bot.Send(m.Sender, "↓ выбери дальнейшее действие ↓", menu)
+
 	})
 
 	bot.Handle(tb.OnText, func(m *tb.Message) {
@@ -233,6 +253,13 @@ func TelegramBot(botApi, content_, users_, startM_, sendM_ string) {
 		bot.Send(m.Sender, "_Бот это не поддерживает_\nОтправь боту картинку, видео или gif'ку", markdown)
 	})
 
+	// 	_, ok := actions[m.Text]
+	// 	if ok {
+	// 		actions[m.Text](bot, m)
+	// 	} else {
+	// 		bot.Send(m.Sender, "_Я тебя не понимаю_", markdown)
+	// 	}
+	// })
 	log.Println("Bot started")
 	bot.Start()
 

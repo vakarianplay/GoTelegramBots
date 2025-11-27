@@ -10,14 +10,21 @@ import (
 )
 
 func main() {
-	botapi, contentPath, listUsers, startMessage, sendMessage := readCfg()[0], readCfg()[1], readCfg()[2], readCfg()[3], readCfg()[4]
-	log.Println(botapi, contentPath, listUsers, startMessage, sendMessage)
+
+	botapi, contentPath, listUsers, startMessage, sendMessage, captMessage := readCfg()[0], readCfg()[1], readCfg()[2], readCfg()[3], readCfg()[4], readCfg()[5]
+
+	log.Println(botapi, contentPath, listUsers, startMessage, sendMessage, captMessage)
+
+	PostingSetup(captMessage)
+
 	TelegramBot(botapi, contentPath, listUsers, startMessage, sendMessage)
+
 }
 
 func readCfg() []string {
 
 	var cfgYaml map[string]interface{}
+	// cfgFile, err := os.ReadFile("config.yaml")
 	cfgFile, err := ioutil.ReadFile("config.yml")
 	if err != nil {
 		log.Fatal(err)
@@ -35,15 +42,17 @@ func readCfg() []string {
 
 	startMsg := (cfgYaml["messages"].(map[string]interface{})["start_message"])
 	sendMsg := (cfgYaml["messages"].(map[string]interface{})["send_message"])
+	captMsg := (cfgYaml["messages"].(map[string]interface{})["content_caption"])
 
 	apiKey_ := fmt.Sprintf("%v", apiKey)
 	usersContent_ := fmt.Sprintf("%v", usersContent)
 	usersList_ := fmt.Sprintf("%v", usersList)
 	startMsg_ := fmt.Sprintf("%v", startMsg)
 	sendMsg_ := fmt.Sprintf("%v", sendMsg)
+	captMsg_ := fmt.Sprintf("%v", captMsg)
 
 	var out []string
-	out = append(out, apiKey_, usersContent_, usersList_, startMsg_, sendMsg_)
+	out = append(out, apiKey_, usersContent_, usersList_, startMsg_, sendMsg_, captMsg_)
 
 	return out
 }
