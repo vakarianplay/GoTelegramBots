@@ -20,7 +20,7 @@
 - [x] Save content 
 - [x] Configurate bot messages
 - [x] Markdown support
-- [ ] Config admins tgid in config file
-- [ ] Auto-posting content from admins
-- [ ] Config default caption for contents
+- [x] Config admins tgid in config file
+- [x] Auto-posting content from admins
+- [x] Config default caption for contents
 - [ ] Resend user-content to admin's DM for moderation 
