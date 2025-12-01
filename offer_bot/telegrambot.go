@@ -211,7 +211,7 @@ func TelegramBot(botApi, content_, users_, startM_, sendM_ string) {
 		userName := m.Sender.FirstName + " " + m.Sender.LastName
 		// bot.Send(m.Sender, "*Привет, "+userName+"*\n\n_Этот бот - предложка._\nПросто скинь сюда мем, который ты хочешь запостить.", markdown)
 		bot.Send(m.Sender, userName+"\n"+startM_, markdown)
-		bot.Send(m.Sender, "📊 Разработчик бота: *https://t.me/cyberbibki \n https://vakarian.website*", markdown)
+		bot.Send(m.Sender, "📊 Разработчик бота: *https://t.me/cyberbibki\nhttps://vakarian.website*", markdown)
 		// bot.Send(m.Sender, "↓ выбери дальнейшее действие ↓", menu)
 
 	})
@@ -264,3 +264,4 @@ func TelegramBot(botApi, content_, users_, startM_, sendM_ string) {
 	bot.Start()
 
 }
+
